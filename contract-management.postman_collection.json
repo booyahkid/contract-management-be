@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "Contract Management API",
+    "_postman_id": "contract-management-api",
+    "description": "Postman collection for testing Contract Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Get All Contracts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/contracts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "contracts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Contract by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/contracts/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "contracts",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Contract",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/contracts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "contracts"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"contract_type\": \"Kontrak\",\n  \"contract_number\": \"CN-2024-003\",\n  \"contract_name\": \"Maintenance Server Tahunan\",\n  \"category\": \"IT\",\n  \"sub_category\": \"Maintenance\",\n  \"item\": \"Perawatan UPS & Server\",\n  \"contract_date\": \"2024-07-01\",\n  \"start_date\": \"2024-07-10\",\n  \"end_date\": \"2025-07-09\",\n  \"ats_amount\": 20000000,\n  \"jsl_amount\": 1000000,\n  \"subscription_amount\": 0,\n  \"notes\": \"Perpanjangan kontrak maintenance\",\n  \"department\": \"IT\",\n  \"pic_user_name\": \"Ahmad Subekti\",\n  \"pic_ipm_name\": \"Dian IPM\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Delete Contract",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/contracts/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "contracts",
+            "1"
+          ]
+        }
+      }
+    }
+  ],
+  "event": []
+}
