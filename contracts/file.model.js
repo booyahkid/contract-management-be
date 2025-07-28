@@ -21,3 +21,11 @@ exports.getFileById = async (fileId) => {
   const result = await db.query(`SELECT * FROM contract_files WHERE id = $1`, [fileId]);
   return result.rows[0];
 };
+
+exports.deleteFile = async (fileId) => {
+  const result = await db.query(
+    `DELETE FROM contract_files WHERE id = $1 RETURNING *`,
+    [fileId]
+  );
+  return result.rows[0];
+};

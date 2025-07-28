@@ -27,8 +27,20 @@ CREATE TABLE IF NOT EXISTS contracts (
   department VARCHAR(100),
   pic_user_name VARCHAR(100),
   pic_ipm_name VARCHAR(100),
+  vendor VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CONTRACT FILES TABLE
+CREATE TABLE IF NOT EXISTS contract_files (
+  id SERIAL PRIMARY KEY,
+  contract_id INTEGER REFERENCES contracts(id) ON DELETE CASCADE,
+  file_path VARCHAR(255) NOT NULL,
+  original_name VARCHAR(255) NOT NULL,
+  mime_type VARCHAR(100),
+  size INTEGER,
+  uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO users (name, email, password, role)
@@ -41,16 +53,16 @@ INSERT INTO contracts (
   category, sub_category, item,
   contract_date, start_date, end_date,
   ats_amount, jsl_amount, subscription_amount,
-  notes, department, pic_user_name, pic_ipm_name
+  notes, department, pic_user_name, pic_ipm_name, vendor
 ) VALUES
   ('Kontrak', 'CN-2024-001', 'Pengadaan Jaringan LAN',
    'IT', 'Network', 'Switch, Router, Kabel',
    '2024-01-10', '2024-02-01', '2025-01-31',
    10000000, 2000000, 0,
-   'Untuk kebutuhan jaringan kampus', 'IT Department', 'Budi Setiawan', 'Rina IPM'),
+   'Untuk kebutuhan jaringan kampus', 'IT Department', 'Budi Setiawan', 'Rina IPM', 'PT Teknologi Nusantara'),
 
   ('PO', 'PO-2024-002', 'Lisensi Software Akuntansi',
    'Software', 'Accounting', 'Software Akuntansi Tahunan',
    '2024-03-01', '2024-03-15', '2025-03-14',
    0, 0, 15000000,
-   'Langganan software keuangan', 'Finance', 'Siti Aminah', 'Doni IPM');
+   'Langganan software keuangan', 'Finance', 'Siti Aminah', 'Doni IPM', 'PT Software Solutions');

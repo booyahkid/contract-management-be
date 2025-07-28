@@ -15,17 +15,29 @@ const storage = multer.diskStorage({
 const allowedMimeTypes = [
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-  "application/msword", // .doc (lama)
+  "application/msword", // .doc
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+  "application/vnd.ms-excel", // .xls
+  "image/jpeg", // .jpg, .jpeg
+  "image/png", // .png
 ];
 
 const fileFilter = (req, file, cb) => {
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error("Only PDF and Word (.docx) files are allowed"), false);
+    cb(new Error(`File type ${file.mimetype} is not allowed. Supported formats: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG`), false);
   }
 };
 
-const upload = multer({ storage, fileFilter });
+
+
+const upload = multer({ 
+  storage, 
+  fileFilter,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  }
+});
 
 module.exports = upload;
