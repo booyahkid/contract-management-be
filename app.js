@@ -12,9 +12,8 @@ const emailRoutes = require('./emails/email.routes');
 
 const errorHandler = require('./middlewares/errorhandler');
 
-// Enable CORS for all origins in development
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3002', 'http://127.0.0.1:3000'], // Add both possible frontend ports
+  origin: ['http://localhost:3000', 'http://localhost:3002', 'http://127.0.0.1:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
