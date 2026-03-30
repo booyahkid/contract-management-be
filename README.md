@@ -1,23 +1,23 @@
-# 🚀 IGW Backend API Server
+# IGW Backend API Server
 
 Clean and organized Express.js backend for the Intelligent Gateway contract management system.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 BE/
-├── 📄 app.js                    # Express application setup
-├── 📄 server.js                 # Server startup configuration
-├── 📄 package.json              # Dependencies and scripts
-├── 📄 .env                      # Environment variables
+├── app.js                    # Express application setup
+├── server.js                 # Server startup configuration
+├── package.json              # Dependencies and scripts
+├── .env                      # Environment variables
 │
-├── 🔐 auth/                     # Authentication System
+├── auth/                     # Authentication System
 │   ├── auth.controller.js       # Login/logout handlers
 │   ├── auth.service.js          # JWT token management
 │   ├── auth.routes.js           # Auth API endpoints
 │   └── auth.validation.js       # Input validation
 │
-├── 📋 contracts/                # Contract Management
+├── contracts/                # Contract Management
 │   ├── contract.controller.js   # CRUD operations
 │   ├── contract.model.js        # Database queries
 │   ├── contract.routes.js       # Contract endpoints
@@ -32,37 +32,37 @@ BE/
 │   ├── file.routes.js           # File endpoints
 │   └── rag.service.js           # RAG integration
 │
-├── 🤖 rag/                      # RAG System Integration
+├── rag/                      # RAG System Integration
 │   ├── rag.controller.js        # RAG chat handlers
 │   └── rag.routes.js            # RAG API endpoints
 │
-├── 🔧 middlewares/              # Express Middlewares
+├── middlewares/              # Express Middlewares
 │   ├── auth.middleware.js       # JWT authentication
 │   ├── errorHandler.js          # Global error handling
 │   └── upload.middleware.js     # File upload handling
 │
-├── 💾 config/                   # Configuration
+├── config/                   # Configuration
 │   └── db.js                    # PostgreSQL connection
 │
-├── 🗃️ database/                 # Database Scripts
+├── database/                 # Database Scripts
 │   ├── schema.sql               # Complete database schema
 │   ├── dummy-contracts.sql      # Test data
 │   └── *.sql                    # Migration scripts
 │
-├── 🛠️ scripts/                  # Utility Scripts
+├── scripts/                  # Utility Scripts
 │   ├── reset-users.js           # User management
 │   ├── sync-contracts-to-rag.js # RAG synchronization
 │   └── fix-contract-id-types.js # Database maintenance
 │
-├── 📁 uploads/                  # File Storage
+├── uploads/                  # File Storage
 │   ├── contract files (PDFs)
 │   └── file_metadata.json
 │
-└── 📁 docs/                     # Documentation
+└── docs/                     # Documentation
     └── (moved documentation files)
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Install dependencies
@@ -75,7 +75,7 @@ npm run dev
 npm start
 ```
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/auth/login` - User login
@@ -100,7 +100,7 @@ npm start
 ### Analytics
 - `GET /api/contracts/analytics/summary` - Dashboard data
 
-## 🛡️ Security Features
+## Security Features
 
 - JWT-based authentication
 - Role-based access control (admin, manager, staff, user)
@@ -108,7 +108,7 @@ npm start
 - Input sanitization
 - CORS protection
 
-## 🔧 Configuration
+## Configuration
 
 Required environment variables in `.env`:
 ```
@@ -121,7 +121,7 @@ JWT_SECRET=your_jwt_secret
 PORT=3001
 ```
 
-## 🧪 Testing
+## Testing
 
 Essential scripts for development:
 - `scripts/reset-users.js` - Reset user accounts
@@ -129,4 +129,4 @@ Essential scripts for development:
 
 ---
 
-**Status:** ✅ Production Ready | **Last Updated:** September 2025
+**Status:** Production Ready | **Last Updated:** September 2025

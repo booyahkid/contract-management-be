@@ -1,6 +1,6 @@
 # Authentication System - User Accounts
 
-## 🔐 Login Credentials
+## Login Credentials
 
 After running the user reset script, the following dummy accounts are available:
 
@@ -38,7 +38,7 @@ After running the user reset script, the following dummy accounts are available:
 - **Role:** `user`
 - **Name:** Alice Johnson
 
-## 🔄 Resetting User Data
+## Resetting User Data
 
 To delete all existing users and create new dummy accounts, run:
 
@@ -47,7 +47,7 @@ cd /Users/bas/Developer/IGW/BE
 node scripts/reset-users.js
 ```
 
-## 🧪 Testing Authentication
+## Testing Authentication
 
 ### Test Login (Admin)
 ```bash
@@ -63,7 +63,7 @@ curl -X POST http://localhost:3001/api/auth/login \
   -d '{"email": "john@example.com", "password": "user123"}'
 ```
 
-## 📋 API Response Format
+## API Response Format
 
 The login endpoint now returns both token and user data:
 
@@ -79,13 +79,13 @@ The login endpoint now returns both token and user data:
 }
 ```
 
-## 🛡️ Role-Based Access
+## Role-Based Access
 
 - **admin**: Full access to all features
 - **manager**: Management level access
 - **staff**: Staff level access
 - **user**: Basic user access
 
-## 🔧 Frontend Integration
+## Frontend Integration
 
 The frontend authentication has been updated to properly handle the new response format with user data included.
