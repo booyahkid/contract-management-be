@@ -15,10 +15,34 @@ exports.getActiveContracts = async () => {
   return parseInt(result.rows[0].total);
 };
 
+// Active contracts that are active at any point in the specified year
+exports.getActiveContractsByYear = async (year) => {
+  // A contract is considered active in the year if its start_date is before end of year
+  // and its end_date is after start of year (or null meaning open-ended)
+  const result = await db.query(
+    `SELECT COUNT(*) AS total FROM contracts 
+     WHERE start_date <= make_date($1,12,31)
+       AND (end_date IS NULL OR end_date >= make_date($1,1,1))`,
+    [year]
+  );
+  return parseInt(result.rows[0].total);
+};
+
 exports.getDueSoonContracts = async (months) => {
   const result = await db.query(
     `SELECT COUNT(*) AS total FROM contracts WHERE end_date BETWEEN CURRENT_DATE AND CURRENT_DATE + ($1 || ' months')::interval`,
     [months]
+  );
+  return parseInt(result.rows[0].total);
+};
+
+// Contracts ending within the first N months of the specified year
+exports.getDueSoonContractsByYear = async (months, year) => {
+  const result = await db.query(
+    `SELECT COUNT(*) AS total FROM contracts 
+     WHERE end_date >= make_date($2,1,1)
+       AND end_date < (make_date($2,1,1) + ($1 || ' months')::interval)`,
+    [months, year]
   );
   return parseInt(result.rows[0].total);
 };
@@ -29,6 +53,17 @@ exports.getDueSoonContractList = async (months) => {
     [months]
   );
   return result.rows;
+};
+
+// Contracts whose end_date falls inside the specified year
+exports.getExpiredContractsByYear = async (year) => {
+  const result = await db.query(
+    `SELECT COUNT(*) AS total FROM contracts 
+     WHERE end_date IS NOT NULL 
+       AND EXTRACT(YEAR FROM end_date) = $1`,
+    [year]
+  );
+  return parseInt(result.rows[0].total);
 };
 
 exports.getContractsGroupedByDepartment = async () => {
@@ -84,4 +119,14 @@ exports.getCreatedContractsByMonth = async (year) => {
     ORDER BY MIN(contract_date)
   `, [year]);
   return result.rows.map(r => ({ month: r.month.trim(), created: parseInt(r.count) }));
+};
+
+// Optional combined summary helper (not used directly yet but available)
+exports.getContractsStatusSummary = async (year, months = 3) => {
+  const [active, dueSoon, expired] = await Promise.all([
+    exports.getActiveContractsByYear(year),
+    exports.getDueSoonContractsByYear(months, year),
+    exports.getExpiredContractsByYear(year)
+  ]);
+  return { year, months_window: months, active_contracts: active, due_soon_contracts: dueSoon, expired_contracts: expired };
 };

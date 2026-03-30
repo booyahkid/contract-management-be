@@ -11,8 +11,8 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const token = await AuthService.login(req.body);
-    res.json({ token });
+    const result = await AuthService.login(req.body);
+    res.json(result); // Now returns { token, user }
   } catch (err) {
     next(err);
   }

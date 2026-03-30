@@ -1,3 +1,4 @@
+-- Clean schema with only used tables
 -- Enable extensions
 CREATE EXTENSION IF NOT EXISTS vector;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -12,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Contracts table
+-- Contracts table (main table - actively used)
 CREATE TABLE IF NOT EXISTS contracts (
   id SERIAL PRIMARY KEY,
   contract_type VARCHAR(50) NOT NULL,
@@ -36,55 +37,12 @@ CREATE TABLE IF NOT EXISTS contracts (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Contract files table
-CREATE TABLE IF NOT EXISTS contract_files (
-  id SERIAL PRIMARY KEY,
-  contract_id INTEGER REFERENCES contracts(id) ON DELETE CASCADE,
-  file_path VARCHAR(255) NOT NULL,
-  original_name VARCHAR(255) NOT NULL,
-  mime_type VARCHAR(100),
-  size INTEGER,
-  uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Contract embeddings for RAG
-CREATE TABLE IF NOT EXISTS contract_embeddings (
-    id SERIAL PRIMARY KEY,
-    contract_id INTEGER REFERENCES contracts(id) ON DELETE CASCADE,
-    chunk_text TEXT NOT NULL,
-    embedding TEXT, -- Store as JSON array since pgvector might not be available
-    chunk_index INTEGER,
-    section_type VARCHAR(100),
-    metadata JSONB, -- Store additional metadata as JSON
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Chat sessions (fixed)
-CREATE TABLE IF NOT EXISTS chat_sessions (
-    id SERIAL PRIMARY KEY,
-    session_id UUID DEFAULT uuid_generate_v4(),
-    user_id VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT unique_session_id UNIQUE (session_id)
-);
-
--- Chat messages (fixed)
-CREATE TABLE IF NOT EXISTS chat_messages (
-    id SERIAL PRIMARY KEY,
-    session_id UUID REFERENCES chat_sessions(session_id) ON DELETE CASCADE,
-    role VARCHAR(20) CHECK (role IN ('user', 'assistant')),
-    content TEXT NOT NULL,
-    metadata JSONB,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create indexes (we'll add vector index later when we have data)
-CREATE INDEX IF NOT EXISTS idx_contract_embeddings_contract_id ON contract_embeddings(contract_id);
-CREATE INDEX IF NOT EXISTS idx_chat_messages_session_id ON chat_messages(session_id);
-CREATE INDEX IF NOT EXISTS idx_chat_sessions_user_id ON chat_sessions(user_id);
+-- Create indexes for performance
 CREATE INDEX IF NOT EXISTS idx_contracts_contract_number ON contracts(contract_number);
 CREATE INDEX IF NOT EXISTS idx_contracts_vendor ON contracts(vendor);
+CREATE INDEX IF NOT EXISTS idx_contracts_category ON contracts(category);
+CREATE INDEX IF NOT EXISTS idx_contracts_start_date ON contracts(start_date);
+CREATE INDEX IF NOT EXISTS idx_contracts_end_date ON contracts(end_date);
 
 -- Insert sample data
 INSERT INTO users (name, email, password, role)

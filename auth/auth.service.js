@@ -24,5 +24,14 @@ exports.login = async ({ email, password }) => {
     expiresIn: process.env.JWT_EXPIRES_IN
   });
 
-  return token;
+  // Return both token and user data (exclude password)
+  return {
+    token,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role
+    }
+  };
 };

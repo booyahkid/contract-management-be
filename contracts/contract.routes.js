@@ -11,6 +11,11 @@ router.post('/', auth, validateContract, controller.create);
 router.put('/:id', auth, validateContract, controller.update);
 router.delete('/:id', auth, controller.remove);
 
+// RAG Management Routes
+router.post('/sync-rag', auth, controller.syncToRAG); // Sync all contracts to RAG
+router.post('/:id/sync-rag', auth, controller.syncToRAG); // Sync specific contract to RAG
+router.get('/rag/test-connection', auth, controller.testRAGConnection); // Test RAG connection
+
 // Legacy upload route (keep for compatibility)
 router.post('/upload', auth, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
