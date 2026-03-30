@@ -43,7 +43,6 @@ After running the user reset script, the following dummy accounts are available:
 To delete all existing users and create new dummy accounts, run:
 
 ```bash
-cd /Users/bas/Developer/IGW/BE
 node scripts/reset-users.js
 ```
 
